@@ -2,7 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/nutric food.png'
-import MainImg from '../../pages/MainImg/MainImg';
+// import MainImg from '../../pages/MainImg/MainImg';
+// import Blogs from '../../pages/Blogs/Blogs';
 
 
 
@@ -27,9 +28,7 @@ const Header = () => {
             </div>
             
         </div>
-            <div className='container'>
-            <MainImg></MainImg>
-            </div>
+            
         </div>
         
     );

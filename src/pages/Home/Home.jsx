@@ -1,10 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
+import MainImg from '../MainImg/MainImg';
+import Chefs from '../Chefs/Chefs';
 
 const Home = () => {
     return (
         <div>
-            <h2>this is home</h2>
+            <MainImg></MainImg>
+            <Chefs></Chefs>
         </div>
     );
 };
