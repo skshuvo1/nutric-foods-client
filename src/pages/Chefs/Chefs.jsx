@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import Cards from '../Cards/Cards';
+import { Row } from 'react-bootstrap';
 
 const Chefs = () => {
 
@@ -16,18 +17,12 @@ const Chefs = () => {
     return (
         <div>
             <h3>Choose Your Favorite Chefs Here</h3>
-            <div>
-            <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={`chefsData.image`} />
-      <Card.Body>
-        <Card.Title>{chefsData.name}</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the content.
-        </Card.Text>
-        <Button variant="primary">Details</Button>
-      </Card.Body>
-    </Card>
+            <div className='container flex gap-4 '>
+            <Row xs={1} md={2} lg={3}>
+            {
+                chefsData.map(chef => <Cards key = {chef.id} chef = {chef}></Cards>)
+            }
+            </Row>
             </div>
         </div>
     );
