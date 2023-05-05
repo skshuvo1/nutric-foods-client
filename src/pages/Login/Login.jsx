@@ -1,14 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import './Login.css'
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    console.log(email);
 
     const handleEmailChange = (e) => {
-
-        setUsername(e.target.value);
+        setEmail(e.target.value);
     };
 
     const handlePasswordChange = (e) => {
@@ -18,7 +19,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Do something with username and password, e.g. send them to a server to verify
-        console.log("Username:", username);
+        console.log("Email:", email);
         console.log("Password:", password);
     };
 
@@ -37,8 +38,9 @@ const Login = () => {
                 />
 
                 <br />
-                <button className='mb-3 ms-5 rounded text-white bg-primary'  type="submit">Submit</button>
+                <button className=' ms-5 rounded text-white bg-primary px-3 py-2'  type="submit">Login</button>
             </form>
+            <p className='mt-2'>New to this website. Please <Link to={'/register'}>Register</Link></p>
         </div>
     );
 };
