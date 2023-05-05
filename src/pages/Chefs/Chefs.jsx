@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Cards from '../Cards/Cards';
 import { Row } from 'react-bootstrap';
+import './Chefs.css'
 
 const Chefs = () => {
 
@@ -15,9 +16,9 @@ const Chefs = () => {
         .catch('error', console.error('error'))
     },[])
     return (
-        <div>
-            <h3>Choose Your Favorite Chefs Here</h3>
-            <div className='container flex gap-4 '>
+        <div className='chef-container'>
+            <h2 className='text-center mb-5 py-3'>Choose Your Favorite Chefs Here</h2>
+            <div className='container flex'>
             <Row xs={1} md={2} lg={3}>
             {
                 chefsData.map(chef => <Cards key = {chef.id} chef = {chef}></Cards>)
