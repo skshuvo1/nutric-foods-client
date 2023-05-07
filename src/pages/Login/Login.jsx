@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    console.log(email);
+    // console.log(email);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -19,19 +19,20 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Do something with username and password, e.g. send them to a server to verify
-        console.log("Email:", email);
-        console.log("Password:", password);
+        // console.log("Email:", email);
+        // console.log("Password:", password);
     };
 
     return (
         <div className='login-container' >
             <form onSubmit={handleSubmit}>
                 <input className='mb-3' type="text" name="" id="" placeholder='Your name' /><br />
-                <input className='mb-3' onChange={handleEmailChange} type="email" name="email" placeholder='Enter your email' />
+                <input className='mb-3' onChange={handleEmailChange} type="email" value={email} name="email" placeholder='Enter your email' />
                 <br />
                 <input  className='mb-3'
                     onChange={handlePasswordChange}
                     type="password"
+                    name='password'
                     value={password}
                     placeholder='Enter your password'
 

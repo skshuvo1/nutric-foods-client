@@ -7,10 +7,10 @@ import './Chefs.css'
 const Chefs = () => {
 
     const [chefsData, setChefsData] = useState([]);
-    console.log(chefsData);
+    // console.log(chefsData);
 
     useEffect(() => {
-        fetch('http://localhost:3000/allData')
+        fetch('https://the-nutric-food-server-skshuvo1.vercel.app/allData')
         .then(res => res.json())
         .then(data => setChefsData(data))
         .catch('error', console.error('error'))
