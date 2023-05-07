@@ -2,6 +2,10 @@
 import React, { useState } from 'react';
 import './Login.css'
 import { Link } from 'react-router-dom';
+import app from '../../firebase/firebase.config';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+const auth = getAuth(app)
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -18,6 +22,14 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then(result => {
+            const userLogged = result.user;
+            console.log(userLogged);
+        })
+        .catch((error) => {
+            console.error(error)
+        })
         // Do something with username and password, e.g. send them to a server to verify
         // console.log("Email:", email);
         // console.log("Password:", password);
