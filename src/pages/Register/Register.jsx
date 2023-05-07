@@ -31,42 +31,54 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    
     const email = event.target.email.value;
     const Password = event.target.Password.value;
     event.target.reset;
     console.log(email, Password);
+
     createUserWithEmailAndPassword(auth, email, password)
+    // sendEmailVerification(auth.currentUser)
       .then(result => {
         const loggedUser = result.user;
         setError('')
         setSuccess('User has created successfully')
         console.log(loggedUser);
+        // sendVerificationEmail(result.user)
       })
       .catch((error) => {
         // console.error(error)
         setError(error.message)
+        if(!/(?=.*[a-z])/.test(password)){
+          setError('please add at least one lowercase')
+          setSuccess('')
+          
+        }
+        else if(!/(?=.*[A-Z])/.test(password)){
+          setError('please add at least one uppercase')
+          setSuccess('')
+          
+        }
         
       })
-      if(!/(?=.*[a-z])/.test(password)){
-        setError('please add at least one lowercase')
-        setSuccess('')
-      }
-      else if(!/(?=.*[A-Z])/.test(password)){
-        setError('please add at least one uppercase')
-        setSuccess('')
-      }
       
 
-
   }
+  // const sendVerificationEmail = (user) => {
+  //   sendEmailVerification(user)
+  //   .then(result => {
+  //     const regUser = result.user;
+  //     alert('please verify your email')
+  //     console.log(regUser);
+  //   })
+  //   .catch(error => {
+  //     console.error(error)
+  //   })
+  // }
   return (
     <div>
       <Form onSubmit={handleSubmit} className='w-25 m-auto mt-3 mb-5'>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
-
           <Form.Control onChange={handleEmailChange} type="email" name="email" placeholder="Enter email" required />
         </Form.Group>
 
@@ -82,6 +94,7 @@ const Register = () => {
           Submit
         </Button>
         <p className='mt-2'>Already have an account. Please <Link to={'/login'}>Login</Link></p>
+        
         <p className='text-danger'>{error}</p>
         <p className='text-info'>{success}</p>
 
