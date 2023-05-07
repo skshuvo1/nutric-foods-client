@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import app from '../../firebase/firebase.config';
 
 
@@ -33,8 +33,10 @@ const Register = () => {
     event.preventDefault();
     const email = event.target.email.value;
     const Password = event.target.Password.value;
+    const name = event.target.name.value
     event.target.reset;
-    console.log(email, Password);
+    console.log(email, Password, name);
+    
 
     createUserWithEmailAndPassword(auth, email, password)
     // sendEmailVerification(auth.currentUser)
@@ -44,6 +46,7 @@ const Register = () => {
         setSuccess('User has created successfully')
         console.log(loggedUser);
         // sendVerificationEmail(result.user)
+        updateData(loggedUser, name)
       })
       .catch((error) => {
         // console.error(error)
@@ -63,6 +66,12 @@ const Register = () => {
       
 
   }
+const updateData = (user,name) => {
+  updateProfile(user, {
+    displayName:name
+  })
+}
+
   // const sendVerificationEmail = (user) => {
   //   sendEmailVerification(user)
   //   .then(result => {
@@ -77,7 +86,9 @@ const Register = () => {
   return (
     <div>
       <Form onSubmit={handleSubmit} className='w-25 m-auto mt-3 mb-5'>
-
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <input className='mb-3' type="text" name="name" id="" placeholder='Your name' /><br />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control onChange={handleEmailChange} type="email" name="email" placeholder="Enter email" required />
         </Form.Group>

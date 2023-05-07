@@ -62,7 +62,7 @@ const Login = () => {
     return (
         <div className='login-container' >
             <form onSubmit={handleSubmit}>
-                <input className='mb-3' type="text" name="" id="" placeholder='Your name' /><br />
+                
                 <input className='mb-3' onChange={handleEmailChange} type="email" ref={emailRef} value={email} name="email" placeholder='Enter your email' />
                 <br />
                 <input  className='mb-3'
