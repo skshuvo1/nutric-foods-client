@@ -3,10 +3,11 @@ import React, { useRef, useState } from 'react';
 import './Login.css'
 import { Link } from 'react-router-dom';
 import app from '../../firebase/firebase.config';
-import { getAuth,  sendPasswordResetEmail,  signInWithEmailAndPassword } from 'firebase/auth';
+import { GithubAuthProvider, GoogleAuthProvider, getAuth,  sendPasswordResetEmail,  signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 
 const auth = getAuth(app)
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -58,6 +59,17 @@ const Login = () => {
         
 
     }
+    const signInWithGoogle = () => {
+        signInWithPopup(auth, new GoogleAuthProvider) 
+        .then(res => console.log(res))
+        .catch(error => console.log(error.message))
+       }
+    const signInWithGithub = () => {
+        signInWithPopup(auth, new GithubAuthProvider)
+        .then(res => console.log(res))
+        .catch(error => console.log(error.message))
+
+    }
 
     return (
         <div className='login-container' >
@@ -75,10 +87,15 @@ const Login = () => {
                 />
 
                 <br />
-                <button className=' ms-5 rounded text-white bg-primary px-3 py-2'  type="submit">Login</button>
+                
+                <button className=' ms-5 rounded text-white bg-primary px-4 py-2'  type="submit">Login</button>
+                <div className='d-flex gap-4 mt-3'>
+                <button className='  rounded text-white bg-secondary px-3' onClick={signInWithGoogle}>google</button>
+                <button className='  rounded text-white bg-secondary px-3' onClick={signInWithGithub}>github</button> 
+                </div>
             
             </form>
-            <p>Forget password? please <button onClick={handleResetPassword} className='btn btn-link'>reset</button></p>
+            <p>Forget password? please <button onClick={handleResetPassword} className='btn btn-link'>reset password</button></p>
             <p >New to this website. Please <Link to={'/register'}>Register</Link></p>
         </div>
     );

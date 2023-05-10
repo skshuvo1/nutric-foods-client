@@ -24,7 +24,7 @@ const Header = () => {
             <Link style={{textDecoration:'none'}} to = '/blogs'>Blogs</Link>
             </div>
             <div>
-            <Link to='/login'><button>Login</button></Link>
+            <Link to='/login'><button className=' ms-5 rounded text-white bg-primary px-4 py-2'>Login</button></Link>
             </div>
             
         </div>

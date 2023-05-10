@@ -86,8 +86,8 @@ const updateData = (user,name) => {
   return (
     <div>
       <Form onSubmit={handleSubmit} className='w-25 m-auto mt-3 mb-5'>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <input className='mb-3' type="text" name="name" id="" placeholder='Your name' /><br />
+      <Form.Group  controlId="formBasicEmail">
+        <Form.Control type="text" name="name" id="" placeholder='Your name' /><br />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control onChange={handleEmailChange} type="email" name="email" placeholder="Enter email" required />
