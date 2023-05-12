@@ -1,4 +1,4 @@
-.details-Btn{
+.Recipe-Btn{
     position: absolute;
     bottom: 0;
     left:0;
@@ -9,4 +9,10 @@
 .container{
     position: relative;
     
+}
+.text-container{
+    font-size: 15px;
+}
+.chef-img{
+    border-radius: 20px;
 }

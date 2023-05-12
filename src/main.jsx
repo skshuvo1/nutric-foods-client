@@ -11,6 +11,10 @@ import Home from './pages/Home/Home';
 import Blogs from './pages/Blogs/Blogs';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Recipe from './pages/Recipes/Recipe';
+// import SingleChef from './pages/singleChef/SingleChef';
+// import Cards from './pages/Cards/Cards';
+
 
 const router = createBrowserRouter([
   {
@@ -18,7 +22,7 @@ const router = createBrowserRouter([
     element: <Routes></Routes>,
     children: [
       {
-        path:'/',
+        path:'/', 
         element: <Home></Home>
       },
       {
@@ -32,9 +36,27 @@ const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register></Register>
+      },
+      {
+        path:'/recipe/:id',
+        element:<Recipe></Recipe>,
+        loader:({params}) => fetch(`http://localhost:3000/allData/${params.id}`)
       }
+      
     ]
   },
+
+  // {
+  //   path: '/allData',
+  //   element:<Recipe></Recipe>,
+  //   children: [
+  //     {
+  //       path:':id',
+  //       element:<SingleChef></SingleChef>
+  //     }
+  //   ]
+  
+  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
