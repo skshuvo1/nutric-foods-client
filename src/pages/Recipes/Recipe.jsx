@@ -1,19 +1,22 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import { Card, Col} from 'react-bootstrap';
+import { Card, Col, Row} from 'react-bootstrap';
 import { useLoaderData } from 'react-router-dom';
 import './Recipe.css'
+import SingleChef from '../singleChef/SingleChef';
 // import SingleChef from '../singleChef/SingleChef';
 
 const Recipe = () => {
 
     const data = useLoaderData();
     // console.log(data);
+    const singleRecipe = data.recipes;
+    // console.log(singleRecipe);
    
     
     return (
        
-        <div className='mb-3'>
+        <div className='mb-3 '>
             
         <Col>
         <Card >
@@ -38,13 +41,27 @@ const Recipe = () => {
   </div>
   </div>
 </Card>
+       
 
         </Col>
         
+        <div className='main-container'>
+        <h3 className='text-center m-4 py-4'>All Recipes Are Here</h3>
         
+        <div className='container flex gap-4'>
+        
+        <Row xs={1} md={2} lg={3}>
+          {
+          singleRecipe.map(recipe => <SingleChef key={recipe.rating} recipe = {recipe} ></SingleChef>)
+        }
+        </Row>
+        
+        </div>
+        </div>
+        </div>
 
         
-    </div>
+   
 
        
     );
