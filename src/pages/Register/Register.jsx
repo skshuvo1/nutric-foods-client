@@ -103,7 +103,7 @@ const updateData = (user,name) => {
         
         <Button variant="primary" type="submit">
           Submit
-        </Button>
+        </Button>  
         <p className='mt-2'>Already have an account. Please <Link to={'/login'}>Login</Link></p>
         
         <p className='text-danger'>{error}</p>

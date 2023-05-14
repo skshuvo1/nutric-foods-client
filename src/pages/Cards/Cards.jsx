@@ -1,8 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, } from 'react-bootstrap';
 import './Cards.css';
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+
+
 
 
 
@@ -12,6 +15,15 @@ const Cards = ({chef}) => {
   // eslint-disable-next-line react/prop-types
   const {name, yearOfExperience, recipe, likes, id, image} = chef;
   // console.log(chef);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000);
+  },[]);
+  
   
 
 
@@ -30,8 +42,22 @@ const Cards = ({chef}) => {
             <li>Likes: {likes}</li>
           </ul>
         </Card.Text>
+
+        <Button variant="info" className='Recipe-Btn' >View Recipe</Button>
+        {
+          loading?<ClipLoader
+          color= '#D0021B'
+          size={50}
+        />:
+        <Link to={`/recipe/${id}`}><Button onClick={() => setLoading(!loading)} variant="info" className='Recipe-Btn' >View Recipe</Button></Link>
         
-        <Link to={`/recipe/${id}`}><Button variant="info" className='Recipe-Btn' >View Recipe</Button></Link>
+        }
+        
+
+        
+        
+        
+        
         
         
       </Card.Body>
