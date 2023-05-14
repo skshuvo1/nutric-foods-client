@@ -13,7 +13,7 @@ const Chefs = () => {
         fetch('https://the-nutric-food-server-skshuvo1.vercel.app/allData')
         .then(res => res.json())
         .then(data => setChefsData(data))
-        .catch('error', console.error('error'))
+        .catch('error')
     },[])
     return (
         <div className='chef-container'>
