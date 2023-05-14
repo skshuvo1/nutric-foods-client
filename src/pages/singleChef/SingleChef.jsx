@@ -3,24 +3,24 @@ import React from 'react';
 import { Card, Col } from 'react-bootstrap';
 import './SingleChef.css';
 import { FaHeart } from "react-icons/fa";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 // eslint-disable-next-line react/prop-types
 const SingleChef = ({recipe}) => {
-    
+    // <App></App>
     // eslint-disable-next-line react/prop-types
     const {recipeName, recipeImage,cookingMethod,ingredients, rating} = recipe;
     const elements = [...ingredients +", "];
-    // const method = cookingMethod.length;
-    // console.log(cookingMethod.lenght);
-    // if(method > 50){
-    //     method.slice(0, 50)
-    // };
+   
 
     const handleFavoriteBtn = () => {
         document.getElementById('button').style.color ='red';
+        alert("Is this recipe your favorite??");
+    
        
     }
+   
     return (
         <div>
             
