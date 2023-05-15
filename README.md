@@ -2,4 +2,8 @@
 2. This project helps me to improve myself to cover my laggins.
 3. You can find everything about food and chefs from this site.
 4. Valid users can login in this website.
+<<<<<<< HEAD
 5. This was a great challenges for me.
+=======
+5. This was a great challenges for me.
+>>>>>>> 5752a1be51a0f3b31e46fb92a3f30a82da9d62c3
