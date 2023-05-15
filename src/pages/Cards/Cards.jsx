@@ -4,6 +4,7 @@ import { Button, Card, Col, } from 'react-bootstrap';
 import './Cards.css';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 
@@ -32,7 +33,8 @@ const Cards = ({chef}) => {
             
             <Col>
             <Card className='container' style={{ width: '20rem', height:'28rem' }}>
-      <Card.Img className='mt-4 chef-img' style={{height:'200px'}} variant="top" src={image} />
+      {/* <Card.Img className='mt-4 chef-img' style={{height:'200px'}} variant="top" src={image} /> */}
+<LazyLoadImage className='mt-4 chef-img' style={{height:'200px'}} variant="top" src={image}></LazyLoadImage>
       <Card.Body className='mt-5'>
         <Card.Title>{name}</Card.Title>
         <Card.Text className='text-container'>
