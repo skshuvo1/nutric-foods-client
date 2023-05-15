@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       {
         path:'/recipe/:id',
         element:<Recipe></Recipe>,
-        loader:({params}) => fetch(`http://localhost:3000/allData/${params.id}`)
+        loader:({params}) => fetch(`https://the-nutric-food-server-skshuvo1.vercel.app/allData/${params.id}`)
       },
       {
         path:'*',
