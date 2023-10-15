@@ -15,3 +15,5 @@ You can find everything about food and chefs from this site.
 Valid users can login in this website.
 This was a great challenges for me.
 >>>>>>> d073de82fcfc2b0ffbea9af1eb4e86b6d3b86a14
+>>>>>>> 6..Live link::https://the-nutric-food.web.app/
+>>>>>>> 
