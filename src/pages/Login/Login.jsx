@@ -1,20 +1,27 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useRef, useState } from 'react';
+
+import React, { useRef, useState, useContext } from 'react';
 import './Login.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import app from '../../firebase/firebase.config';
-import { GithubAuthProvider, GoogleAuthProvider, getAuth,  sendPasswordResetEmail,  signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { GithubAuthProvider, GoogleAuthProvider, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { authContext } from '../../firebase/AuthProvider';
+import { Button, Form } from 'react-bootstrap';
 
 
 const auth = getAuth(app)
 
 
 const Login = () => {
+
+    const { signInUser, loading } = useContext(authContext)
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
+    const [photo, setPhoto] = useState('')
     const emailRef = useRef();
-    console.log(email,password, error);
+    console.log(email, password, error);
+
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -24,79 +31,87 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
+    const handlePhotoChange = (e) => {
+        console.log(e.target.value);
+        setPhoto(e.target.value)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then(result => {
-            const userLogged = result.user;
-            console.log(userLogged);
-        })
-        .catch((error) => {
-            console.error(error)
-        })
-        // Do something with username and password, e.g. send them to a server to verify
-        // console.log("Email:", email);
-        // console.log("Password:", password);
+        signInUser(email, password)
+            .then(result => {
+                const userLogged = result.user;
+                console.log(userLogged);
+                navigate('/')
+                loading(true)
+            })
+            .catch((error) => {
+                setError(error.message)
+            })
     };
     const handleResetPassword = () => {
         const email = emailRef.current.value;
-        // console.log(email);
-        
-        if(!email){
+        if (!email) {
             alert('please add an email to reset password')
             return;
         }
-       else{
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            alert('please check your email')
-        })
-        .catch(error => {
-            // console.error(error)
-            setError(error.message)
-        })
-       }
-        
+        else {
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    alert('please check your email')
+                })
+                .catch(error => {
+                    setError(error.message)
+                })
+        }
+
 
     }
     const signInWithGoogle = () => {
-        signInWithPopup(auth, new GoogleAuthProvider) 
-        .then(res => console.log(res))
-        .catch(error => console.log(error.message))
-       }
+        signInWithPopup(auth, new GoogleAuthProvider)
+            .then(res => console.log(res))
+            .catch(error => console.log(error.message))
+    }
     const signInWithGithub = () => {
         signInWithPopup(auth, new GithubAuthProvider)
-        .then(res => console.log(res))
-        .catch(error => console.log(error.message))
+            .then(res => console.log(res))
+            .catch(error => console.log(error.message))
 
     }
 
     return (
-        <div className='login-container' >
-            <form onSubmit={handleSubmit}>
-                
-                <input className='mb-3' onChange={handleEmailChange} type="email" ref={emailRef} value={email} name="email" placeholder='Enter your email' />
-                <br />
-                <input  className='mb-3'
-                    onChange={handlePasswordChange}
-                    type="password"
-                    name='password'
-                    value={password}
-                    placeholder='Enter your password'
+        <div >
 
-                />
+            <h2 className='text-center'>Please Login !!!</h2>
+            <Form onSubmit={handleSubmit} className='w-25 m-auto mt-3 mb-5'>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Control type="text" name="name" id="" placeholder='Your name' /><br />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control onChange={handleEmailChange} type="email" name="email" ref={emailRef} value={email} placeholder="Enter email" required />
+                </Form.Group>
 
-                <br />
-                
-                <button className=' ms-5 rounded text-white bg-primary px-4 py-2'  type="submit">Login</button>
-                <div className='d-flex gap-4 mt-3'>
-                <button className='  rounded text-white bg-secondary px-3' onClick={signInWithGoogle}>google</button>
-                <button className='  rounded text-white bg-secondary px-3' onClick={signInWithGithub}>github</button> 
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                    <Form.Control onChange={handlePasswordChange} type="password" name='Password' value={password} placeholder="Password" required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Control onChange={handlePhotoChange} type="text" name='photo' value={photo} placeholder="Your PhotoURL" required />
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+                <p className='resetBtn'>Forgot password? please <button onClick={handleResetPassword} className='btn btn-link'>reset password</button></p>
+                <p>New to this website. Please  <Link to={'/register'}>Register</Link></p>
+
+                <div className='d-flex gap-4 mt-3 text-center'>
+                    <Button className='  rounded text-white bg-secondary px-3' onClick={signInWithGoogle}>google</Button>
+                    <Button className='  rounded text-white bg-secondary px-3' onClick={signInWithGithub}>github</Button>
                 </div>
-            
-            </form>
-            <p>Forget password? please <button onClick={handleResetPassword} className='btn btn-link'>reset password</button></p>
-            <p >New to this website. Please <Link to={'/register'}>Register</Link></p>
+                <p><span  className='text-danger'>{error}</span></p>
+
+            </Form>
         </div>
     );
 };

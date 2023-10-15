@@ -13,8 +13,8 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Recipe from './pages/Recipes/Recipe';
 import NotFound from './NotFound/NotFound';
-// import SingleChef from './pages/singleChef/SingleChef';
-// import Cards from './pages/Cards/Cards';
+import AuthProvider from './firebase/AuthProvider';
+import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 
 
 const router = createBrowserRouter([
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/recipe/:id',
-        element:<Recipe></Recipe>,
+        element:<PrivateRoute><Recipe></Recipe></PrivateRoute>,
         loader:({params}) => fetch(`https://the-nutric-food-server-skshuvo1.vercel.app/allData/${params.id}`)
       },
       {
@@ -54,6 +54,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <AuthProvider>
     <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )

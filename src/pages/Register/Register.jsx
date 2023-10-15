@@ -1,21 +1,21 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+
+import React, { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import app from '../../firebase/firebase.config';
+import { Link, useNavigate } from 'react-router-dom';
+import { updateProfile } from "firebase/auth";
+import { authContext } from '../../firebase/AuthProvider';
 
 
-
-const auth = getAuth(app)
 const Register = () => {
+  const {createUser, loading} = useContext(authContext)
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
-  console.log(email, password);
+  const [success, setSuccess] = useState('');
+  const [photo, setPhoto] = useState('')
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
@@ -26,7 +26,11 @@ const Register = () => {
   const handlePasswordChange = (e) => {
     const password = e.target.value;
     setPassword(password)
-    // console.log(password);
+  }
+
+  const handlePhotoChange = (e) => {
+    const photo = e.target.value;
+    setPhoto(photo)
   }
 
   const handleSubmit = (event) => {
@@ -34,57 +38,48 @@ const Register = () => {
     const email = event.target.email.value;
     const Password = event.target.Password.value;
     const name = event.target.name.value
-    event.target.reset;
-    console.log(email, Password, name);
+    const photo = event.target.photo.value;
+    event.target.reset();
+    console.log(email, Password, name, photo);
+    if(!/(?=.*[a-z])/.test(password)){
+      setError('please add at least one lowercase')
+      setSuccess('')
+      return;
+      
+    }
     
 
-    createUserWithEmailAndPassword(auth, email, password)
-    // sendEmailVerification(auth.currentUser)
+    createUser(email, password)
       .then(result => {
         const loggedUser = result.user;
         setError('')
-        setSuccess('User has created successfully')
+        setSuccess('User has created successfully');
+        loading(true)
+       navigate('/login')
         console.log(loggedUser);
-        // sendVerificationEmail(result.user)
-        updateData(loggedUser, name)
+        updateData(loggedUser, name, photo)
       })
       .catch((error) => {
-        // console.error(error)
         setError(error.message)
-        if(!/(?=.*[a-z])/.test(password)){
-          setError('please add at least one lowercase')
-          setSuccess('')
-          
-        }
-        else if(!/(?=.*[A-Z])/.test(password)){
-          setError('please add at least one uppercase')
-          setSuccess('')
-          
-        }
+        
         
       })
       
 
   }
-const updateData = (user,name) => {
+const updateData = (user,name,photo) => {
+  console.log(user,name,photo);
   updateProfile(user, {
-    displayName:name
+    displayName:name,
+    photoURL: photo
+
   })
 }
 
-  // const sendVerificationEmail = (user) => {
-  //   sendEmailVerification(user)
-  //   .then(result => {
-  //     const regUser = result.user;
-  //     alert('please verify your email')
-  //     console.log(regUser);
-  //   })
-  //   .catch(error => {
-  //     console.error(error)
-  //   })
-  // }
+ 
   return (
     <div>
+      <h2 className='text-center'>Please Register</h2>
       <Form onSubmit={handleSubmit} className='w-25 m-auto mt-3 mb-5'>
       <Form.Group  controlId="formBasicEmail">
         <Form.Control type="text" name="name" id="" placeholder='Your name' /><br />
@@ -98,6 +93,7 @@ const updateData = (user,name) => {
           <Form.Control onBlur={handlePasswordChange} type="password" name='Password' placeholder="Password" required />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Control onBlur={handlePhotoChange}  type="text" name='photo' placeholder="PhotoURL" required />
 
         </Form.Group>
         
